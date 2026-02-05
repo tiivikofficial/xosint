@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>Advanced OSINT X Queries | MR.Tiivik</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="مقاله تخصصی OSINT برای تحلیل اکانت‌های X با کوئری‌های پیشرفته – نوشته MR.Tiivik">
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #121826;
+      --text: #e6e8eb;
+      --muted: #9aa4b2;
+      --accent: #00ff9c;
+      --code-bg: #0e1623;
+      --border: #1f2937;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Vazirmatn", "Segoe UI", Tahoma, sans-serif;
+      background: linear-gradient(180deg, #0b0f14, #070a10);
+      color: var(--text);
+      line-height: 1.9;
+    }
+
+    header {
+      padding: 80px 20px 60px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+
+    header p {
+      color: var(--muted);
+      max-width: 700px;
+      margin: auto;
+      font-size: 1.05rem;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 35px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    section h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      color: var(--accent);
+      border-right: 4px solid var(--accent);
+      padding-right: 12px;
+    }
+
+    section p {
+      color: var(--text);
+      font-size: 1.02rem;
+    }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 18px 0;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.95rem;
+      color: #b9fbc0;
+      direction: ltr;
+      overflow-x: auto;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 0.95rem;
+      border-right: 3px solid var(--accent);
+      padding-right: 10px;
+      margin-top: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 50px 20px 60px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    footer span {
+      color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+      section {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>کالبدشکافی اکانت‌های X با کوئری‌های پیشرفته OSINT</h1>
+  <p>
+    از جستجوی ساده تا تحلیل روایت، موضع‌گیری، شبکه ارتباطات و عملیات شناختی
+  </p>
+</header>
+
+<main>
+
+  <section>
+    <h2>مقدمه</h2>
+    <p>
+      در OSINT، سرچ معمولی یعنی دیدن سطح محتوا؛  
+      اما کوئری حرفه‌ای یعنی دیدن نیت، الگو و پشت‌پرده.
+      این مقاله مجموعه‌ای از کوئری‌های پیشرفته برای تحلیل اکانت‌ها در X (توییتر سابق) است.
+    </p>
+  </section>
+
+  <section>
+    <h2>استخراج گفته‌های یک فرد درباره یک موضوع</h2>
+    <div class="code">from:USERNAME ایران</div>
+    <p>
+      این کوئری تمام توییت‌هایی را نشان می‌دهد که یک فرد مشخص درباره موضوع موردنظر منتشر کرده است.
+    </p>
+  </section>
+
+  <section>
+    <h2>تحلیل موضع‌گیری‌های سیاسی و امنیتی</h2>
+    <div class="code">
+from:USERNAME (ایران OR Iran)
+(تحریم OR جنگ OR امنیت OR تهدید)
+    </div>
+    <p>
+      ترکیب کلیدواژه‌های امنیتی کمک می‌کند موضع واقعی فرد را از لایه‌های احساسی جدا کنیم.
+    </p>
+  </section>
+
+  <section>
+    <h2>تشخیص تغییر روایت در زمان</h2>
+    <div class="code">from:USERNAME ایران until:2023-10-07</div>
+    <div class="code">from:USERNAME ایران since:2023-10-08</div>
+    <p>
+      مقایسه این دو بازه، چرخش روایت و تغییر موضع را آشکار می‌کند.
+    </p>
+  </section>
+
+  <section>
+    <h2>شناسایی عملیات شناختی و هماهنگی رسانه‌ای</h2>
+    <div class="code">
+from:USERNAME ایران (#تحریم OR #اعتراضات OR #FreeIran)
+    </div>
+    <p>
+      استفاده همزمان از هشتگ‌ها و کلیدواژه‌های مشابه، نشانه تزریق روایت است.
+    </p>
+  </section>
+
+  <section>
+    <h2>فیلتر محتوای تحلیلی واقعی</h2>
+    <div class="code">from:USERNAME ایران min_faves:50</div>
+    <p>
+      توییت‌های با تعامل بالا معمولاً حاوی تحلیل‌های اثرگذارتر هستند.
+    </p>
+  </section>
+
+  <section>
+    <h2>نقشه‌برداری ارتباطات پنهان</h2>
+    <div class="code">
+(from:USERNAME ایران) (to:TARGETUSER OR @TARGETUSER)
+    </div>
+    <p>
+      این کوئری ارتباطات مستقیم و شبکه تأثیرگذاری را مشخص می‌کند.
+    </p>
+  </section>
+
+  <section>
+    <h2>کشف پیام‌های کُددار (Dog Whistle)</h2>
+    <div class="code">
+from:USERNAME ("Tehran" OR "IRGC" OR "رژیم") -ایران
+    </div>
+    <p>
+      حذف نام مستقیم موضوع و استفاده از جایگزین‌ها نشانه پیام‌رسانی هدفمند است.
+    </p>
+  </section>
+
+  <section>
+    <h2>کوئری شکارچیان OSINT</h2>
+    <div class="code">
+from:USERNAME (ایران OR Iran)
+(min_faves:20 OR min_replies:10)
+-filter:retweets
+since:2023-01-01
+    </div>
+    <p>
+      خروجی کم، اما بسیار دقیق و باارزش.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  ✍️ نویسنده: <span>MR.Tiivik</span><br>
+  نویسنده‌ای مقیم اینترنت | OSINT · تحلیل روایت · امنیت اطلاعات
+</footer>
+
+</body>
+</html>
